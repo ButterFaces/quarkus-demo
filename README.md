@@ -35,22 +35,28 @@ OpenJDK 64-Bit Server VM GraalVM CE 20.3.0 (build 11.0.9+10-jvmci-20.3-b06, mixe
 # on “graalvm-ce-<version>” can’t be opened because its integrity cannot be verified.
 # see https://github.com/graalvm/homebrew-tap/issues/6
 $ xattr -d com.apple.quarantine /Library/Java/JavaVirtualMachines/graalvm-ce-java11-20.3.0
-```
 
-## Build it
-
-```shell
-$mvn clean package
+# install native-image
+$ ${GRAALVM_HOME}/bin/gu install native-image
 ```
 
 ## Run it
 
+### maven
 ```shell
-# using maven
-$mvn quarkus:dev
+$ mvn quarkus:dev
+```
 
-# using created jar
-java -jar target/quarkus-demo-*-runner.jar
+### executable jar
+```shell
+$ mvn clean package
+$ java -jar target/quarkus-demo-*-runner.jar
+```
+
+### native 
+```shell
+$ mvn clean package -Pnative
+$ ./target/quarkus-demo-1.0.0-SNAPSHOT-runner
 ```
 
 ## Test it
