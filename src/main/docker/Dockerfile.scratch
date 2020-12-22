@@ -1,0 +1,54 @@
+### Image for getting maven dependencies and then acting as a cache for the next image
+FROM maven:3.6.3-jdk-11 AS mavencache
+
+ENV MAVEN_OPTS=-Dmaven.repo.local=/mvnrepo
+
+WORKDIR /app
+
+COPY pom.xml /app/
+
+RUN mvn test-compile dependency:resolve dependency:resolve-plugins
+
+### Image for building the native binary
+FROM oracle/graalvm-ce:20.3.0-java11 AS native-image
+
+ENV MAVEN_OPTS=-Dmaven.repo.local=/mvnrepo
+ENV GRAALVM_HOME=/usr
+
+WORKDIR /app
+
+COPY --from=mavencache /mvnrepo/ /mvnrepo/
+COPY pom.xml /app/
+COPY .mvn /app/.mvn
+COPY mvnw /app/
+COPY mvnw.cmd /app/
+COPY src/main/kotlin /app/src/main/kotlin
+COPY src/main/resources /app/src/main/resources
+
+RUN ls -la /app && gu install native-image && \
+    ./mvnw package -Pnative -Dmaven.test.skip=true && \
+    # Prepare everything for final image
+    mkdir -p /dist && \
+    cp /app/target/*-runner /dist/application
+
+### Final image based on scratch containing only the binary
+FROM scratch
+COPY --from=native-image /dist /work
+COPY --from=native-image /lib64/libc.so.6 /lib64/libc.so.6
+COPY --from=native-image /lib64/libdl.so.2 /lib64/libdl.so.2
+COPY --from=native-image /lib64/libpthread.so.0 /lib64/libpthread.so.0
+COPY --from=native-image /lib64/libz.so.1 /lib64/libz.so.1
+COPY --from=native-image /lib64/librt.so.1 /lib64/librt.so.1
+COPY --from=native-image /lib64/libcrypt.so.1 /lib64/libcrypt.so.1
+COPY --from=native-image /lib64/ld-linux-x86-64.so.2 /lib64/ld-linux-x86-64.so.2
+COPY --from=native-image /lib64/libfreebl3.so /lib64/libfreebl3.so
+
+# it is possible to add timezone, certificat and new user/group
+# COPY --from=xxx /usr/share/zoneinfo /usr/share/zoneinfo
+# COPY --from=xxx /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+# COPY --from=xxx /etc/passwd /etc/passwd
+# COPY --from=xxx /etc/group /etc/group
+EXPOSE 8080
+WORKDIR /work/
+
+ENTRYPOINT ["./application"]

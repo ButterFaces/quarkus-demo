@@ -64,3 +64,29 @@ $ ./target/quarkus-demo-1.0.0-SNAPSHOT-runner
 ```shell
 curl http://localhost:8080/resteasy-jackson/quarks/
 ```
+
+## Docker it
+
+### native (from scratch)
+```shell
+$ DOCKER_BUILDKIT=1 docker build -f src/main/docker/Dockerfile.scratch -t butterfaces/quarkus-demo-scratch .
+$ docker run -i --rm -p 8080:8080 butterfaces/quarkus-demo-scratch
+```
+
+### native (from ubi-minimal)
+```shell
+$ DOCKER_BUILDKIT=1 docker build -f src/main/docker/Dockerfile.native -t butterfaces/quarkus-demo-native .
+$ docker run -i --rm -p 8080:8080 butterfaces/quarkus-demo-native
+```
+
+### jvm (fast-jar)
+```shell
+$ DOCKER_BUILDKIT=1 docker build -f src/main/docker/Dockerfile.fast-jar -t butterfaces/quarkus-demo-fast-jar .
+$ docker run -i --rm -p 8080:8080 butterfaces/quarkus-demo-fast-jar
+```
+
+### jvm (normal)
+```shell
+$ DOCKER_BUILDKIT=1 docker build -f src/main/docker/Dockerfile.jvm -t butterfaces/quarkus-demo-jvm .
+$ docker run -i --rm -p 8080:8080 butterfaces/quarkus-demo-jvm
+```

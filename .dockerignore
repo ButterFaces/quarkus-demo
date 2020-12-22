@@ -1,4 +1,9 @@
 *
+!pom.xml
+!.mvn
+!mvnw*
+!src/main/kotlin
+!src/main/resources
 !target/*-runner
 !target/*-runner.jar
 !target/lib/*
