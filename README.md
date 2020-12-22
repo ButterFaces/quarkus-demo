@@ -36,3 +36,25 @@ OpenJDK 64-Bit Server VM GraalVM CE 20.3.0 (build 11.0.9+10-jvmci-20.3-b06, mixe
 # see https://github.com/graalvm/homebrew-tap/issues/6
 $ xattr -d com.apple.quarantine /Library/Java/JavaVirtualMachines/graalvm-ce-java11-20.3.0
 ```
+
+## Build it
+
+```shell
+$mvn clean package
+```
+
+## Run it
+
+```shell
+# using maven
+$mvn quarkus:dev
+
+# using created jar
+java -jar target/quarkus-demo-*-runner.jar
+```
+
+## Test it
+
+```shell
+curl http://localhost:8080/resteasy-jackson/quarks/
+```
