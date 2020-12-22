@@ -1,4 +1,4 @@
-# quarkus-demo
+# Using Quarkus and ButterFaces
 
 ## Prerequisites
 
