@@ -42,6 +42,6 @@ docker-remove-demo-images:
 	docker rmi -f ${IMAGE_NAME}-native
 	docker rmi -f ${IMAGE_NAME}-scratch
 
-docker-remove-none:
+docker-remove-dangling:
 	@echo "Remove dangling images"
 	docker rmi -f $$(docker images --filter "dangling=true" -q --no-trunc)
