@@ -9,6 +9,7 @@ COPY pom.xml /app/
 
 RUN mvn test-compile dependency:resolve dependency:resolve-plugins
 
+
 ### Image for building the native binary
 FROM oracle/graalvm-ce:20.3.0-java11 AS native-image
 
@@ -30,6 +31,7 @@ RUN ls -la /app && gu install native-image && \
     # Prepare everything for final image
     mkdir -p /dist && \
     cp /app/target/*-runner /dist/application
+
 
 ### Final image based on scratch containing only the binary
 FROM scratch

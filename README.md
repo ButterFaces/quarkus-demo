@@ -10,7 +10,7 @@
 
 ```shell
 # install graalVM 11
-$ brew brew install --cask graalvm/tap/graalvm-ce-java11
+$ brew install --cask graalvm/tap/graalvm-ce-java11
 
 # show installed versions
 $ /usr/libexec/java_home -v 11 -V 
