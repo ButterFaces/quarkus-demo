@@ -12,6 +12,8 @@
             <h:outputText value="Name" />
             <h:inputText value="#{textController.name}" />
             <!--b:text value="Name" /-->
+            <h:commandButton label="Submit" action="#{textController.sayHello}" />
+            <h:outputText value="#{textController.hello}" />
         </h:form>
     </h:body>
 

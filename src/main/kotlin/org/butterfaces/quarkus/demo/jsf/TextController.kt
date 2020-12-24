@@ -6,4 +6,16 @@ import javax.inject.Named
 
 @Named
 @ViewScoped
-class TextController(var name: String = "test") : Serializable
+class TextController(var name: String = "") : Serializable {
+
+    var hello: String = ""
+        private set
+
+    fun sayHello() {
+        hello = """
+            Hello $name,
+            welcome to JSF
+        """.trimIndent()
+    }
+
+}
