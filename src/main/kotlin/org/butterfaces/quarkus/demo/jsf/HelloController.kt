@@ -6,7 +6,7 @@ import javax.inject.Named
 
 @Named
 @ViewScoped
-class TextController(var name: String = "") : Serializable {
+class HelloController(var name: String = "") : Serializable {
 
     var hello: String = ""
         private set

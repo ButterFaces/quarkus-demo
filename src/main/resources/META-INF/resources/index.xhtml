@@ -10,10 +10,10 @@
     <h:body>
         <h:form id="form">
             <h:outputText value="Name" />
-            <h:inputText value="#{textController.name}" />
+            <h:inputText value="#{helloController.name}" />
             <!--b:text value="Name" /-->
-            <h:commandButton label="Submit" action="#{textController.sayHello}" />
-            <h:outputText value="#{textController.hello}" />
+            <h:commandButton label="Submit" action="#{helloController.sayHello}" />
+            <h:outputText value="#{helloController.hello}" />
         </h:form>
     </h:body>
 
