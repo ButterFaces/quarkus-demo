@@ -25,6 +25,8 @@ docker-run-jvm:
 docker-build-native:
 	@echo "Remove docker image if already exists"
 	docker rmi -f ${IMAGE_NAME}-native
+	@echo "Build application"
+	./mvnw package -Pnative
 	@echo "Build native image"
 	DOCKER_BUILDKIT=1 docker build -f src/main/docker/Dockerfile.native -t ${IMAGE_NAME}-native .
 
