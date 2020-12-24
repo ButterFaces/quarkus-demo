@@ -1,8 +1,6 @@
 # Using Quarkus and ButterFaces
 
-## Project is ON_HOLD
-
-**Reasons:**
+**Project is ON_HOLD - Reasons:**
 * https://github.com/apache/myfaces/tree/master/extensions/quarkus/showcase only supports native images when using GraalVM 19.*.*
 * Quarkus only supports 20.2 (Please upgrade GraalVM to this version)
 * ButterFaces integration is not supported (out-of-the-box) by myfaces quarkus extension
