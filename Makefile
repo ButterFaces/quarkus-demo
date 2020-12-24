@@ -3,15 +3,19 @@ IMAGE_NAME=butterfaces/quarkus-demo
 docker-build-fast-jar:
 	@echo "Remove docker image if already exists"
 	docker rmi -f ${IMAGE_NAME}-fast-jar
+	@echo "Build application"
+	./mvnw package -Dquarkus.package.type=fast-jar
 	@echo "Build fast-jar image"
 	DOCKER_BUILDKIT=1 docker build -f src/main/docker/Dockerfile.fast-jar -t ${IMAGE_NAME}-fast-jar .
 
-docker-run-jast-jar:
+docker-run-fast-jar:
 	docker run -i --rm -p 8080:8080 ${IMAGE_NAME}-fast-jar
 
 docker-build-jvm:
 	@echo "Remove docker image if already exists"
 	docker rmi -f ${IMAGE_NAME}-jvm
+	@echo "Build application"
+	./mvnw package
 	@echo "Build jvm image"
 	DOCKER_BUILDKIT=1 docker build -f src/main/docker/Dockerfile.jvm -t ${IMAGE_NAME}-jvm .
 
